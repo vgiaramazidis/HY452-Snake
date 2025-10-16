@@ -42,7 +42,7 @@ class ScoreServer():
             print(f'Error: {e}')
             self.last_request_status = False
             return None
-        image_data = response.text
+        image_data = response.json().get('body')
         image = BytesIO(base64.b64decode(image_data))
         self.last_request_status = True
         return image
@@ -69,7 +69,7 @@ class ScoreServer():
             print(f'Error: {e}')
             self.last_request_status = False
             return None
-        audio_data = response.text
+        audio_data = response.json().get('body')
         audio = BytesIO(base64.b64decode(audio_data))
         self.last_request_status = True
         return audio
@@ -104,7 +104,6 @@ class ScoreServer():
 
     def register_user(self, name, password, email):
         data = {
-            'action': 'Register',
             'username': name,
             'email': email,
             'passwordHash': hashlib.sha1(password.encode()).hexdigest()
@@ -125,7 +124,6 @@ class ScoreServer():
 
     def login_user(self, name, password):
         data = {
-            'action': 'Login',
             'username': name,
             'passwordHash': hashlib.sha1(password.encode()).hexdigest()
         }
