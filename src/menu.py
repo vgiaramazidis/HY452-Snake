@@ -1103,6 +1103,7 @@ class Login(Menu):
                         self.error = True
                     else:
                         self.error_text = 'Login successful'
+                        self.response = self.response['body']
                         self.game.player_name = self.response['username']
                         self.game.email = self.response['email']
                         self.game.highscore = max(int(self.response['highscore']) , self.game.highscore)
